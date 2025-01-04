@@ -1,0 +1,27 @@
+This project is going to be a command line application that runs on our local machines using Node.js. The purpose of this application is to crawl a 
+website and produce a report of the internal linking structure of the website. Basically which pages link to which other pages on the site. This is a
+tool that would be traditionally used by web marketers or SEO (Search Engine Optimisation) experts.
+1. First we create a new repo in github for the project that we are starting. Next, we clone that repository inside a folder where we want to create
+the app using the command "git clone <repo link>"
+2. Next, we install NVM or the node version. After that we will use the command "nvm install <version>" followed by the command "nvm use <version>"
+3. Next, to check whether everything is working, we will create a main.js file and console.log "Hello World". To run it, we will type, "node main.js"
+and this starts the node interpreter and passes in main.js as the entry point. It logs "Hello World" and we are good to go. 
+4. Running the node kind of manually from the command line, like the node and then the name of a file, it works just fine. But, because we're going to
+be installing a test suite and packages, we're actually going to use NPM to manage all that environment and ecosystem. So, inorder to get that going, 
+we just run the command "npm init" and press enter to set all the values as default. This will create a package.json file, in this file the only thing
+that we need to change at this point is that we need to add a new script that we'll just call "start" that runs "node main.js" for us. So, instead of
+manually typing node main.js into the command line, we will type npm start and that will call the script that we just wrote now. The purpose of this is
+now that we're using a package.json file, when we pull in dependencies and run our code through npm, the dependencies will be available to our code. 
+Similarly, we will be using npm to run our tests so its convenient to have everything in the start command. We run the command once to check if its
+working.
+5. So, we're going to be doing some test-driven development as we build out this project and in order to do so we need a test suite. So, we're going to
+install Jest a fairly popular testing runtime. We can do that by typing, "npm install --save-dev jest". This will creat the package-lock.json file
+and the node_modules folder.
+6. Now, we don't want these to be uploaded to our repo so we add a ".gitignore" file and add the node_modules to it. We do this because this folder
+contains all of the dependencies for our project and we don't want to commit that code to our repository, we just want the code that is unique to
+our application. So, we'll keep track of our dependencies in the package.json, which is committed to our source control. So, anytime we pull down this 
+repository fresh, it won't have the node modules so a developer will just need to type, 'npm install' in order to install all the dependencies listed
+in the package.json.
+7. Now, that we have Jest added as a dependency, we will add a script to actually run it. We will swap out the echo command in the test script in
+package.json with "jest". Now, if we run 'npm test' it will run and say no tests found so now we are properly calling Jest and now we just need to
+add some tests.
