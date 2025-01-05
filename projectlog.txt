@@ -25,3 +25,30 @@ in the package.json.
 7. Now, that we have Jest added as a dependency, we will add a script to actually run it. We will swap out the echo command in the test script in
 package.json with "jest". Now, if we run 'npm test' it will run and say no tests found so now we are properly calling Jest and now we just need to
 add some tests.
+8. Now, the first function that we write tests for is going to be called normalize URLs and we will create a file called crawl.js to write that
+function in. Usually when we are doing test-driven development, there are three steps, the first step is to stub out the function that we want to test,
+the second step is to write the tests for the function and the third step is to go back and actually implement the main crux of the function. Following
+this, we will first stub out our function what this really means is that the function does not do anything useful as such but it gives us an idea of 
+what goes in and what comes out. Next, we write the test file called crawl.test.js and the way that jest works is that it just automatically looks for
+files in your package or in your folder project directory that end in .test.js so it is important that we name it with that suffix. Heading back to our
+crawl.js file we will add a module.exports which will make the normalizeURL function available to other JS files that want to import it. Now, we go back
+to our test file and import the function as well as two more functions from jest called 'test' and 'expect'. So, the way testing works with Jest is that 
+there is a top test function and it takes as input the name of the test that will be the name of our function that we made, normalizeURL. The second 
+input is a function and within this function we can use the expect function to do a test. To do that we will first specify what will be the input that 
+we will give to the normalizeURL function as the variable 'input' next we will pass the input to the function and save it as the variable 'actual' in 
+the sense that this will be the actual output of the input given to the function and then we will define a variable expected that will hold the value 
+that we expect the function to give when the specified input is passed to the function. Then we will use the expect function, pass it the variable 
+'actual' and use the method 'toEqual' with it and pass it the variable 'expected'. This line says that we are expecting the actual output of normalizeURL 
+to equal the expected output that we've specified.If they do equal each other, Jest will log it as a pass test. If they don't equal each other, then jest 
+is going to say the test failed. To run the tests we can simply type the command npm test.
+9. Now, that our testing environment is ready we will now actually implement the normalizeURL function. Sometimes on the Internet, there are different
+URLs that all point to effectively the same page. So 'https://google.com', 'http://google.com' and 'https://Google.com' are all basically URL strings
+for the same webpage. So basically, if all these things are put into the normalizeURL function, we want the same thing to come out. Now, we will build
+the actual test suite. We will take any of the above URL strings as an input and the first thing that we need to do is strip down the protocol. The 
+domain name and the path together make up the address of the webpage. We don't care about query parameters, protocols etc. when it comes to what page 
+does this URL represent. And thats how we write our test too, we set the output as the URL that does not contain any of the above. Now, we need to write 
+a function to do that to our string. We implemented this function using the built-in URL constructor. This will give us a URL object with a bunch of
+properties like hostname and pathname and that's what we are going to return both as a string. Next thing that we want our normalizeURL function to 
+handle is trailing slashes. So, we will add a new test to our test suite and in this test as an input we will add a trailing slash on the URL and we
+will deal with it in our function as well. Next test we will write is to remove capitals from our URL and normalize them to lowercase. We don't need
+to write any extra logic for this because the URL constructor is doing it for us bcoz it knows that URLs are case insensitive.
