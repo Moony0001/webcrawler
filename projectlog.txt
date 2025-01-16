@@ -52,3 +52,30 @@ properties like hostname and pathname and that's what we are going to return bot
 handle is trailing slashes. So, we will add a new test to our test suite and in this test as an input we will add a trailing slash on the URL and we
 will deal with it in our function as well. Next test we will write is to remove capitals from our URL and normalize them to lowercase. We don't need
 to write any extra logic for this because the URL constructor is doing it for us bcoz it knows that URLs are case insensitive.
+10. Next, we are going to add another function called get URLs from HTML and in order to be able to write that function we are going to need a new 
+dependency i.e. JS DOM. The interesting thing about this dependency is that it is not a dev dependency. Dev dependencies are just intended to be used
+by the developer whereas dependencies are intended to be used by the application when it's running in production. Our getURLsFromHTML function is going
+to take two inputs first will be a string representing some HTML called htmlBody and the second input will be the baseURL which represents the URL of the
+website that we are crawling. This function returns an array of strings. We first write a stub of this function, passing the inputs as mentioned above
+and defining an empty array and returning it as it is. Remember to export this new function that we are creating as well and import it in our test suite
+as well. Now, we will create some tests for this function as well in this, we need to pass two inputs, one a body of an HTML and the other a base URL
+of the website. The baseURL represents the URL of the website that we are crawling and htmlBody is the body part of the HTML of our site. Remember to 
+pass the right inputs to the right function. Now, the purpose of the getURLsFromHTML function is to grab all of the URLs or links embedded within an HTML 
+page. So, when we visit a web page, and there's tons of clickable links, we want to grab all of those clickable links out of the document and return 
+them in an array of strings. That is what we will write in our function. Don't forget to export and import the functions. Now we will add some tests for
+this. We will be using the JSDOM package so we will require it in our crawl.js. The way that JS DOM works is that it basically gives us a way to access 
+DOM APIs or Document Object Model APIs. So, we create this DOM object by calling new JS DOM and passing it some HTML like htmlBODY. So, its taking that
+HTML as a string and creating a DOM, basically an in-memory object that represents that HTML tree structure. dom.window.document.querySelectorAll('a');
+This will return us link elements. This syntax is what we would use in the browser to work with the DOM. The package JS DOM is allowing us to do that in
+node so we can write a command line script that interacts with the DOM and crawls the web pages. The reason we are passing 'a' in it is because we want a
+list of all the 'a' tags in the HTML. Next we loop over that array and the linkElements is an object that has a property and the property we're interested
+in is the href property so we push this into the urls array. Adding another test, we are not just pulling out absolute URLs we are also pulling out relative
+URLs. A relative URL is a URL that does not include the protocol and the domain, it just includes a path. To the browser, the relative URL is the same
+as the absolute URL because the way that the browser works is it looks at what domain you are on when you are viewing a page and all of the links in the
+page if they are relative, it will assume that they are kind of attached to the same domain. So, the actual URL would be the baseURL + the relative URL.
+Now, we don't want to extract the relative URL out of the HTML instead we want to combine it into a full absolute URL so we can actually make requests
+to it later. Basically it means that we want to pull out the full, complete URL. To write the function, we will first break down the logic tree based on
+whether we're working with absolute or relative URLs. Next, we will add a test that will pull out multiple links of both relative and absolute kinds and
+we won't need to change our function for this test to pass. One last test for this function is that when we are given a bad URL, we don't include it in
+the extracted URLs. To do that we will use the URL object constructor and pass it the linkElements, if the URL object is made then the URL will be pushed
+and if the URL object is not made then it will throw an error and we will console log it and the invalid URL will not be extracted.
