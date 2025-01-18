@@ -79,3 +79,26 @@ whether we're working with absolute or relative URLs. Next, we will add a test t
 we won't need to change our function for this test to pass. One last test for this function is that when we are given a bad URL, we don't include it in
 the extracted URLs. To do that we will use the URL object constructor and pass it the linkElements, if the URL object is made then the URL will be pushed
 and if the URL object is not made then it will throw an error and we will console log it and the invalid URL will not be extracted.
+11. So far, we have been writing helper functions and written some tests to make sure that they are working. We should write a main function which will
+be the entry point to the application and all it should do at this point is process command line arguments because we are going to provide the link of the
+website that we want to crawl, through the command line. In node, this is pretty easy. There's an object at the global level called process and argv is a 
+property that we can use to grab the command line arguments. Within the main function, we first check to make sure that the command line arguments have
+been passed in properly. For that we check the length of the argv and we want it to be greater than 2. The reason behind this is that if we give our
+command line no argument, the lenght of the array is 2. The first argument is the interpreter, its strange but the first argument to any program is
+always the name of the program, that's how these operating systems work. Node is technically the name of our program because node is what's running and
+interpretting our code because we're using an interpreted programming language. The second argument to our program is the name of our code or the entry
+point file. If we actually pass in an argument to our program, that argument will be the third argument. Hence, the length of argv must be greater than
+or equal to 3. To make our checking more robust so that not more than one website is provided we will add another check for too many arguments for >3.
+Once all these checks are passed, we will be sure that we have only 3 arguments and we will be able to pick out our base URL to be the 2nd element.
+12. Now, we deal with the HTTP part of the project. We go to the crawl.js file and create a new function called crawlPage and as input it will take the 
+currentURL. Next, we will make a fetch request to that URL, this is going to be a GET request because we're hoping to get back some HTML. We don't even 
+need to specify any options, fetch gets requests by default. Now, we are expecting the response body to be formatted as HTML instead of JSON so we're 
+going to just parse it as text again, because we already wrote getURLsFromHTML which takes HTML as a string, as text, as input. So, we can just grab it 
+as text. Remember to export and import crawl.js file in the main.js file. Another thing that we need to take care of is that if the user types in some
+invalid URL, the response is the stack trace of the error and this is not a good UX. We should give prettier error messages and exit cleanly when there's
+bad user input but also as we crawl pages, because we're going to be crawling multiple pages with our tool, we don't want to encounter one bad link and
+have the whole process just kind of vomit and exit, we want to be able to handle that and keep crawling and moving. For that we are going to add some
+try-catch handling. So, we have checked for an error in the fetch call but we also want to check some more things because there are some other things
+that could go wrong. The first thing is the status code, we need to check and ensure that the status code of this fetch request is a 200 to 300 level code.
+Another thing that we need to check for is that we are actually getting HTML back i.e. when we parse the body, does it actually contain text that represents
+valid HTML. The way that we are going to do that is by parsing the headers.
