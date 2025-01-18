@@ -102,3 +102,18 @@ try-catch handling. So, we have checked for an error in the fetch call but we al
 that could go wrong. The first thing is the status code, we need to check and ensure that the status code of this fetch request is a 200 to 300 level code.
 Another thing that we need to check for is that we are actually getting HTML back i.e. when we parse the body, does it actually contain text that represents
 valid HTML. The way that we are going to do that is by parsing the headers.
+13. Now, we will update the crawl page function so that it can crawl an entire website rather than just a single page. So, instead of just accepting a 
+currentURL, its going to have three arguments. There's going to be a baseURL, a currentURL and a pages object. The baseURL is going to be the starting
+point, the home page of the website. The currentURL is going to be the current page that we are actively crawling and the pages object is going to be an
+object that keeps track of all the pages that we've crawled so far. First we need to make sure that the currentURL is actually on the same domain as the
+baseURL. Whenever we encounter a link that links out to an external website, we want to ignore it. We can do that by using the new URL constructor. Now,
+the crawlPage function is not going to return nothing anymore, it is now going to return the pages object. That's how we keep track as we crawl page
+multiple times. Next, we want to check if we have already crawled this page. The way we can check if we've already crawled this page is if the normalized
+current URL exists within the pages object. The pages object is essentially a map of normalized URLs to the number of times we've seen that URL or that
+we've crawled that URL. Now, instead of logging the entire HTML of the page, we are going to save it in a variable and try to extract any external links
+from it so that we have more pages to crawl, we have already written and tested a function that does that. Next, we are going to iterate over the URLs
+in the nextURLs variable and recursively call the crawlPage function with the currentURL passed as the nextURL and save it to the pages object. Finally,
+we return the pages object. We also change the call in the main.js. Even when there is an issue, we still want to return the current pages object so
+we change that in our error handling part of the code. Remember that crawlPage returns a promise so we will add an await before calling it in the main.js
+file and set the main function as an async function. (Example command:  npm start https://wagslane.dev )
+14. The data that we have obtained is going to be useful for building a report of all the information.
